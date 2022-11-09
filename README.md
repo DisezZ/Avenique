@@ -1,6 +1,6 @@
 # avenique
 
-A new Flutter project.
+Avenique is a wallet management application that let you manage your wallet.
 
 ## Getting Started
 
