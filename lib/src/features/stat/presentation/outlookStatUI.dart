@@ -3,15 +3,14 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 
 //-------------------------------------------------------------------
-class CashflowAllAccStatGraph extends StatefulWidget {
-  const CashflowAllAccStatGraph({super.key});
+class OutlookAllAccStatGraph extends StatefulWidget {
+  const OutlookAllAccStatGraph({super.key});
 
   @override
-  State<CashflowAllAccStatGraph> createState() =>
-      _CashflowAllAccStatGraphState();
+  State<OutlookAllAccStatGraph> createState() => _OutlookAllAccStatGraphState();
 }
 
-class _CashflowAllAccStatGraphState extends State<CashflowAllAccStatGraph> {
+class _OutlookAllAccStatGraphState extends State<OutlookAllAccStatGraph> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,8 +23,9 @@ class _CashflowAllAccStatGraphState extends State<CashflowAllAccStatGraph> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Text('Cash Flow Trend', style: TextStyle(fontSize: 21))),
+                padding: EdgeInsets.only(top: 5, left: 8.0),
+                child: Text('Planned Payments Timeline',
+                    style: TextStyle(fontSize: 18))),
             //DateTimeTest(),
             Padding(
               padding: const EdgeInsets.only(left: 21, right: 21),
@@ -36,7 +36,15 @@ class _CashflowAllAccStatGraphState extends State<CashflowAllAccStatGraph> {
                       borderRadius: BorderRadius.circular(8))),
             ),
             const Padding(
-                padding: EdgeInsets.all(8.0), child: BarChartSample2())
+                padding: EdgeInsets.only(top: 4, left: 10.0),
+                child:
+                    Text('Range:Next 7 Days', style: TextStyle(fontSize: 14))),
+            Padding(
+                padding: EdgeInsets.only(bottom: 2, left: 10.0),
+                child: Text('THB: 290.00', style: TextStyle(fontSize: 28))),
+            const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 4),
+                child: LineChartSample2())
           ]),
         ),
       ),
@@ -407,68 +415,14 @@ class _LineChartSample2State extends State<LineChartSample2> {
 }
 
 //-------------------------------------------------------------------
-class CashflowAccBarStatbox extends StatefulWidget {
-  const CashflowAccBarStatbox({super.key});
+class OutlookAllAccStat extends StatefulWidget {
+  const OutlookAllAccStat({super.key});
 
   @override
-  State<CashflowAccBarStatbox> createState() => _CashflowAccBarStatboxState();
+  State<OutlookAllAccStat> createState() => _OutlookAllAccStatState();
 }
 
-class _CashflowAccBarStatboxState extends State<CashflowAccBarStatbox> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Color.fromARGB(255, 15, 202, 34),
-          borderRadius: BorderRadius.circular(16)),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(
-          child: Row(children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 5, left: 8.0),
-              child: Text('Acc Name:', style: TextStyle(fontSize: 18)),
-            ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(top: 5, right: 16.0),
-              child: Text('THB 300.00', style: TextStyle(fontSize: 16)),
-            ),
-          ]),
-        ),
-        Padding(
-            padding: const EdgeInsets.only(top: 5, left: 8.0, bottom: 8),
-            child: Stack(
-              children: [
-                Container(
-                  height: 22,
-                  width: 360,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(4)),
-                ),
-                Container(
-                  height: 22,
-                  width: 260,
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(4)),
-                ),
-              ],
-            )),
-      ]),
-    );
-  }
-}
-
-//-------------------------------------------------------------------
-class CashflowAllAccStatBar extends StatefulWidget {
-  const CashflowAllAccStatBar({super.key});
-
-  @override
-  State<CashflowAllAccStatBar> createState() => _CashflowAllAccStatBarState();
-}
-
-class _CashflowAllAccStatBarState extends State<CashflowAllAccStatBar> {
+class _OutlookAllAccStatState extends State<OutlookAllAccStat> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -482,7 +436,8 @@ class _CashflowAllAccStatBarState extends State<CashflowAllAccStatBar> {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const Padding(
                 padding: EdgeInsets.only(left: 10.0),
-                child: Text('Cash Flow', style: TextStyle(fontSize: 21))),
+                child: Text('Planned Payment by Category',
+                    style: TextStyle(fontSize: 18))),
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
               child: Container(
@@ -494,227 +449,13 @@ class _CashflowAllAccStatBarState extends State<CashflowAllAccStatBar> {
             const Padding(
                 padding: EdgeInsets.only(top: 4, left: 10.0),
                 child:
-                    Text('Range:Last 7 Days', style: TextStyle(fontSize: 14))),
+                    Text('Range:Next 7 Days', style: TextStyle(fontSize: 14))),
             Padding(
                 padding: EdgeInsets.only(bottom: 8, left: 10.0),
                 child: Text('THB: 290.00', style: TextStyle(fontSize: 28))),
-            CashflowAccBarStatbox(),
-            CashflowAccBarStatbox(),
           ]),
         ),
       ),
-    );
-  }
-}
-
-//-------------------------------------------------------------------
-class BarChartSample2 extends StatefulWidget {
-  const BarChartSample2({super.key});
-
-  @override
-  State<StatefulWidget> createState() => BarChartSample2State();
-}
-
-class BarChartSample2State extends State<BarChartSample2> {
-  final Color leftBarColor = const Color(0xff53fdd7);
-  final Color rightBarColor = const Color(0xffff5182);
-  final double width = 7;
-
-  late List<BarChartGroupData> rawBarGroups;
-  late List<BarChartGroupData> showingBarGroups;
-
-  int touchedGroupIndex = -1;
-
-  @override
-  void initState() {
-    super.initState();
-    final barGroup1 = makeGroupData(0, 5, 12);
-    final barGroup2 = makeGroupData(1, 16, 12);
-    final barGroup3 = makeGroupData(2, 18, 5);
-    final barGroup4 = makeGroupData(3, 20, 16);
-    final barGroup5 = makeGroupData(4, 17, 6);
-    final barGroup6 = makeGroupData(5, 19, 1.5);
-    final barGroup7 = makeGroupData(6, 10, 1.5);
-
-    final items = [
-      barGroup1,
-      barGroup2,
-      barGroup3,
-      barGroup4,
-      barGroup5,
-      barGroup6,
-      barGroup7,
-    ];
-
-    rawBarGroups = items;
-
-    showingBarGroups = rawBarGroups;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-        color: const Color(0xff2c4260),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Expanded(
-                child: BarChart(
-                  BarChartData(
-                    maxY: 20,
-                    barTouchData: BarTouchData(
-                      touchTooltipData: BarTouchTooltipData(
-                        tooltipBgColor: Colors.grey,
-                        getTooltipItem: (a, b, c, d) => null,
-                      ),
-                      touchCallback: (FlTouchEvent event, response) {
-                        if (response == null || response.spot == null) {
-                          setState(() {
-                            touchedGroupIndex = -1;
-                            showingBarGroups = List.of(rawBarGroups);
-                          });
-                          return;
-                        }
-
-                        touchedGroupIndex = response.spot!.touchedBarGroupIndex;
-
-                        setState(() {
-                          if (!event.isInterestedForInteractions) {
-                            touchedGroupIndex = -1;
-                            showingBarGroups = List.of(rawBarGroups);
-                            return;
-                          }
-                          showingBarGroups = List.of(rawBarGroups);
-                          if (touchedGroupIndex != -1) {
-                            var sum = 0.0;
-                            for (final rod
-                                in showingBarGroups[touchedGroupIndex]
-                                    .barRods) {
-                              sum += rod.toY;
-                            }
-                            final avg = sum /
-                                showingBarGroups[touchedGroupIndex]
-                                    .barRods
-                                    .length;
-
-                            showingBarGroups[touchedGroupIndex] =
-                                showingBarGroups[touchedGroupIndex].copyWith(
-                              barRods: showingBarGroups[touchedGroupIndex]
-                                  .barRods
-                                  .map((rod) {
-                                return rod.copyWith(toY: avg);
-                              }).toList(),
-                            );
-                          }
-                        });
-                      },
-                    ),
-                    titlesData: FlTitlesData(
-                      show: true,
-                      rightTitles: AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      topTitles: AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          getTitlesWidget: bottomTitles,
-                          reservedSize: 42,
-                        ),
-                      ),
-                      leftTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: 28,
-                          interval: 1,
-                          getTitlesWidget: leftTitles,
-                        ),
-                      ),
-                    ),
-                    borderData: FlBorderData(
-                      show: false,
-                    ),
-                    barGroups: showingBarGroups,
-                    gridData: FlGridData(show: false),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget leftTitles(double value, TitleMeta meta) {
-    const style = TextStyle(
-      color: Color(0xff7589a2),
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-    );
-    String text;
-    if (value == 0) {
-      text = '1K';
-    } else if (value == 10) {
-      text = '5K';
-    } else if (value == 19) {
-      text = '10K';
-    } else {
-      return Container();
-    }
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 0,
-      child: Text(text, style: style),
-    );
-  }
-
-  Widget bottomTitles(double value, TitleMeta meta) {
-    final titles = <String>['Mn', 'Te', 'Wd', 'Tu', 'Fr', 'St', 'Su'];
-
-    final Widget text = Text(
-      titles[value.toInt()],
-      style: const TextStyle(
-        color: Color(0xff7589a2),
-        fontWeight: FontWeight.bold,
-        fontSize: 14,
-      ),
-    );
-
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 16, //margin top
-      child: text,
-    );
-  }
-
-  BarChartGroupData makeGroupData(int x, double y1, double y2) {
-    return BarChartGroupData(
-      barsSpace: 4,
-      x: x,
-      barRods: [
-        BarChartRodData(
-          toY: y1,
-          color: leftBarColor,
-          width: width,
-        ),
-        BarChartRodData(
-          toY: y2,
-          color: rightBarColor,
-          width: width,
-        ),
-      ],
     );
   }
 }

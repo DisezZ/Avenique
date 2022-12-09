@@ -6,6 +6,7 @@ import 'src/features/account/presentation/accountUi.dart';
 import 'src/features/account/presentation/accountModel.dart';
 import 'src/features/stat/presentation/statUi.dart';
 import './testpage.dart';
+import './src/features/stat/presentation/spendingStatUI.dart';
 
 void main() {
   runApp(const MyApp());

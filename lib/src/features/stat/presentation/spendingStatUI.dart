@@ -2,6 +2,7 @@ import './indicator.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import './graphTest.dart';
 
 class SpendingPieCStatContainer extends StatefulWidget {
   const SpendingPieCStatContainer({super.key});
@@ -39,8 +40,11 @@ class _SpendingPieCStatContainerState extends State<SpendingPieCStatContainer> {
               child: PieChartSample2(),
             ),
             Container(
-              child: LineChartSample2(),
-            )
+              child: SpendingLineChart(),
+            ),
+            // Container(
+            //   child: LineChartSample1(),
+            // ),
           ]),
         ),
       ),
@@ -188,6 +192,12 @@ class PieChart2State extends State {
   }
 }
 
+/*################################################
+ * This function is getDayinBetween
+ * this function will required startdate and endate
+ * return list of day
+ */
+
 List<DateTime> getDaysInBetween(DateTime startDate, DateTime endDate) {
   List<DateTime> days = [];
   for (int i = 0; i <= endDate.difference(startDate).inDays; i++) {
@@ -196,6 +206,51 @@ List<DateTime> getDaysInBetween(DateTime startDate, DateTime endDate) {
   return days;
 }
 
+class TestDateList extends StatefulWidget {
+  const TestDateList({super.key});
+
+  @override
+  State<TestDateList> createState() => _TestDateListState();
+}
+
+class _TestDateListState extends State<TestDateList> {
+  List<String> setOfDate = getDaysBetween(30);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListView.builder(
+        itemCount: setOfDate.length,
+        prototypeItem: ListTile(
+          title: Text(setOfDate.first),
+        ),
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(setOfDate[index]),
+          );
+        },
+      ),
+    );
+  }
+}
+
+List<String> getDaysBetween(int duration) {
+  DateTime startDate = DateTime.now();
+  DateTime newDate;
+  String dateMonthString;
+  List<String> days = [];
+  for (int i = duration; i >= 0; i = i - 1) {
+    newDate = DateTime(startDate.year, startDate.month, startDate.day - i);
+    dateMonthString = DateFormat('dd/MM/yyyy').format(newDate);
+    days.add(dateMonthString);
+  }
+  return days;
+}
+
+/*###########################################
+ * this fucntion is flsportDateinfo
+ * this function will mockup the date for plot
+ * retun list<flspot>
+ */
 List<FlSpot> flspotDateInfo() {
   List<FlSpot> infoLists = [];
   double j = 0;
@@ -206,6 +261,11 @@ List<FlSpot> flspotDateInfo() {
   return infoLists;
 }
 
+/*###########################################
+ * this fucntion is getDateMonth
+ * this function will find the past date between today and duration.
+ * retun string Date
+ */
 String getDateMonth(int durations) {
   DateTime startDate = DateTime.now();
   var newDate =
@@ -227,7 +287,7 @@ class _DateTimeTestState extends State<DateTimeTest> {
   Widget build(BuildContext context) {
     DateTime dateTime = DateTime.now();
     String currentDates = DateFormat('yyyy-MM-dd').format(dateTime);
-    String currentdateMonth = DateFormat('dd/MM').format(dateTime);
+    String currentdateMonth = DateFormat('dd/MM/yyyy').format(dateTime);
     return Container(
       child: Text(currentdateMonth),
     );
@@ -236,25 +296,30 @@ class _DateTimeTestState extends State<DateTimeTest> {
 
 // ----------------[Line chart example]------------------
 // Line chart example from..
-class LineChartSample2 extends StatefulWidget {
-  const LineChartSample2({super.key});
+class SpendingLineChart extends StatefulWidget {
+  const SpendingLineChart({super.key});
 
   @override
-  State<LineChartSample2> createState() => _LineChartSample2State();
+  State<SpendingLineChart> createState() => _SpendingLineChartState();
 }
 
-class _LineChartSample2State extends State<LineChartSample2> {
+class _SpendingLineChartState extends State<SpendingLineChart> {
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
-    const Color(0xff02d39a),
+    const Color(0xff23b6e6),
+  ];
+  List<Color> lineInfoColors = [
+    const Color.fromARGB(255, 237, 240, 231),
+    const Color(0xff23b6e6)
   ];
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        AspectRatio(
-          aspectRatio: 1.60,
+        Container(
+          height: 180,
+          width: double.infinity,
           child: DecoratedBox(
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(
@@ -265,7 +330,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
             child: Padding(
               padding: const EdgeInsets.only(
                 right: 18,
-                left: 12,
+                left: 6,
                 top: 24,
                 bottom: 12,
               ),
@@ -350,23 +415,85 @@ class _LineChartSample2State extends State<LineChartSample2> {
   }
 
   LineChartData mainData() {
+    List<String> listDay = getDaysBetween(30);
     return LineChartData(
+      lineTouchData: LineTouchData(
+        enabled: true,
+        touchTooltipData: LineTouchTooltipData(
+          tooltipBgColor: Colors.blueAccent, //box background color
+          tooltipRoundedRadius: 1,
+          tooltipMargin: 5,
+          showOnTopOfTheChartBoxArea: true,
+          //fitInsideVertically: true,
+          fitInsideHorizontally: true,
+          getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
+            return touchedBarSpots.map((barSpot) {
+              final flSpot = barSpot;
+              if (flSpot.x == 0 || flSpot.x == 6) {
+                return null;
+              }
+
+              TextAlign textAlign;
+              switch (flSpot.x.toInt()) {
+                case 1:
+                  textAlign = TextAlign.left;
+                  break;
+                case 5:
+                  textAlign = TextAlign.right;
+                  break;
+                default:
+                  textAlign = TextAlign.center;
+              }
+
+              return LineTooltipItem(
+                '${listDay[flSpot.x.toInt()]} \n',
+                const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+                children: [
+                  TextSpan(
+                    text: flSpot.y.toString(),
+                    style: TextStyle(
+                      color: Colors.grey[100],
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  const TextSpan(
+                    text: ' k ',
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  const TextSpan(
+                    text: 'calories',
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ],
+                textAlign: textAlign,
+              );
+            }).toList();
+          },
+        ),
+      ),
       gridData: FlGridData(
         show: true,
         drawVerticalLine: true,
         horizontalInterval: 1,
         verticalInterval: 1,
-        /*
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: Color(0xFF2BFA27),
+            color: Color.fromARGB(255, 255, 255, 255),
             strokeWidth: 1,
+            dashArray: [4, 2],
           );
         },
-        */
         getDrawingVerticalLine: (value) {
           return FlLine(
-            color: Color.fromARGB(255, 0, 0, 0),
+            color: Color.fromARGB(255, 4, 4, 26),
             strokeWidth: 1,
           );
         },
@@ -392,13 +519,13 @@ class _LineChartSample2State extends State<LineChartSample2> {
             showTitles: true,
             interval: 1,
             getTitlesWidget: leftTitleWidgets,
-            reservedSize: 42,
+            reservedSize: 32,
           ),
         ),
       ),
       borderData: FlBorderData(
         show: true,
-        border: Border.all(color: const Color(0xff37434d)),
+        border: Border.all(color: Color.fromARGB(255, 239, 239, 239)),
       ),
       minX: 0,
       maxX: 30,
@@ -409,9 +536,9 @@ class _LineChartSample2State extends State<LineChartSample2> {
           spots: flspotDateInfo(),
           isCurved: true,
           gradient: LinearGradient(
-            colors: gradientColors,
+            colors: lineInfoColors,
           ),
-          barWidth: 5,
+          barWidth: 4,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: false,
