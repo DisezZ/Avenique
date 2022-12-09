@@ -1,0 +1,256 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:4841247993905699437",
+      "lastPropertyId": "3:3848595779900618938",
+      "name": "Account",
+      "properties": [
+        {
+          "id": "1:7645240398593915380",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8177801459198244626",
+          "name": "name",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "1:7305675609872637864"
+        },
+        {
+          "id": "3:3848595779900618938",
+          "name": "balance",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:4433489012852754701",
+          "name": "goals",
+          "targetId": "4:7665000035849211467"
+        }
+      ]
+    },
+    {
+      "id": "2:5783459404910710888",
+      "lastPropertyId": "4:829545242459877581",
+      "name": "Budget",
+      "properties": [
+        {
+          "id": "1:897448538952545366",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7907656876817685400",
+          "name": "name",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "2:3483507444887785267"
+        },
+        {
+          "id": "3:3732018446953452387",
+          "name": "amount",
+          "type": 9
+        },
+        {
+          "id": "4:829545242459877581",
+          "name": "period",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "2:2912769593831592751",
+          "name": "accounts",
+          "targetId": "1:4841247993905699437"
+        },
+        {
+          "id": "3:2489885297072464504",
+          "name": "categories",
+          "targetId": "3:1855231126968315103"
+        }
+      ]
+    },
+    {
+      "id": "3:1855231126968315103",
+      "lastPropertyId": "3:2534938247409377927",
+      "name": "Category",
+      "properties": [
+        {
+          "id": "1:4740817988918888562",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1186890166344469867",
+          "name": "name",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "3:3155067107726218488"
+        },
+        {
+          "id": "3:2534938247409377927",
+          "name": "nature",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:7665000035849211467",
+      "lastPropertyId": "5:1156259549848821416",
+      "name": "Goal",
+      "properties": [
+        {
+          "id": "1:6520048539727824333",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9132432712852432475",
+          "name": "name",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "4:7918990559214481343"
+        },
+        {
+          "id": "3:2448839156235215233",
+          "name": "targetAmount",
+          "type": 9
+        },
+        {
+          "id": "4:5230215214398178132",
+          "name": "currentAmount",
+          "type": 9
+        },
+        {
+          "id": "5:1156259549848821416",
+          "name": "endDate",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:4729004912360467001",
+      "lastPropertyId": "7:7694403370233527358",
+      "name": "Payment",
+      "properties": [
+        {
+          "id": "1:8613598199246054866",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7171826882505033063",
+          "name": "name",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "5:928876973103434414"
+        },
+        {
+          "id": "3:2452683592881365466",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "4:2589792580381726770",
+          "name": "amount",
+          "type": 9
+        },
+        {
+          "id": "5:4499472570183044958",
+          "name": "date",
+          "type": 10
+        },
+        {
+          "id": "6:7366633998432877208",
+          "name": "accountId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "6:4866779820219256395",
+          "relationTarget": "Account"
+        },
+        {
+          "id": "7:7694403370233527358",
+          "name": "categoryId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "7:6583901134545039008",
+          "relationTarget": "Category"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:1398046975516183605",
+      "lastPropertyId": "7:8331835869436828837",
+      "name": "Record",
+      "properties": [
+        {
+          "id": "1:8387618665224923497",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6672273601396437187",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "3:3697323532773471548",
+          "name": "amount",
+          "type": 9
+        },
+        {
+          "id": "4:7899527406600690727",
+          "name": "note",
+          "type": 9
+        },
+        {
+          "id": "5:743377096717590465",
+          "name": "date",
+          "type": 10
+        },
+        {
+          "id": "6:7859576223298628026",
+          "name": "accountId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "8:6728756436688186663",
+          "relationTarget": "Account"
+        },
+        {
+          "id": "7:8331835869436828837",
+          "name": "categoryId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "9:469984867852349559",
+          "relationTarget": "Category"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "6:1398046975516183605",
+  "lastIndexId": "9:469984867852349559",
+  "lastRelationId": "3:2489885297072464504",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
