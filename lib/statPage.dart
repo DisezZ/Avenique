@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import './src/features/stat/presentation/statUIbar.dart';
 import './src/features/stat/presentation/balanceStatUI.dart';
 import './src/features/stat/presentation/spendingStatUI.dart';
+import './src/features/stat/presentation/cashflowStatUI.dart';
+import './src/features/stat/presentation/reportsStatUI.dart';
 
 class StatPage extends StatefulWidget {
   const StatPage({super.key});
@@ -32,24 +34,37 @@ class _StatPageState extends State<StatPage> {
         //   padding: const EdgeInsets.only(top: 12),
         //   child: OutlookContainerBar(),
         // ),
+
         // Padding(
         //   padding: const EdgeInsets.only(top: 12),
         //   child: CashflowContainerBar(),
         // ),
-
-        Padding(
-          padding: const EdgeInsets.only(top: 12),
-          child: SpendingContainerBar(),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 12),
-          child: SpendingPieCStatContainer(),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(top: 12),
+        //   child: CashflowAllAccStatBar(),
+        // ),
+        // Padding(
+        //   padding: const EdgeInsets.only(top: 12),
+        //   child: CashflowAllAccStatGraph(),
+        // ),
 
         // Padding(
         //   padding: const EdgeInsets.only(top: 12),
-        //   child: ReportContainerBar(),
+        //   child: SpendingContainerBar(),
         // ),
+        // Padding(
+        //   padding: const EdgeInsets.only(top: 12),
+        //   child: SpendingPieCStatContainer(),
+        // ),
+
+        Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: ReportContainerBar(),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: ReportsAllAccStatBar(),
+        ),
       ],
     );
   }
