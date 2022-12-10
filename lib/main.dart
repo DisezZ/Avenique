@@ -45,7 +45,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
       ),
-      body: const PlanningPage(),
+      body: const StatPage(),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: const Color.fromARGB(255, 96, 197, 255),
         unselectedItemColor: const Color.fromARGB(255, 144, 144, 144),

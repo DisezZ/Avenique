@@ -162,39 +162,43 @@ class _SpendingContainerBarState extends State<SpendingContainerBar> {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+        padding: const EdgeInsets.only(left: 24.0, right: 24.0),
         child: Container(
-            decoration: BoxDecoration(
-                color: Color.fromARGB(255, 29, 246, 221),
-                borderRadius: BorderRadius.circular(16)),
-            height: 60,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                    child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                      const Padding(
-                        padding: EdgeInsets.only(top: 2, left: 8.0),
-                        child: Icon(
-                          Icons.emoji_food_beverage_outlined,
-                          size: 55,
-                        ),
+          decoration: BoxDecoration(
+              color: Color.fromARGB(255, 222, 222, 225),
+              borderRadius: BorderRadius.circular(16)),
+          height: 60,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 15, left: 8.0),
+                      child: Icon(
+                        Icons.bar_chart_sharp,
+                        size: 30,
                       ),
-                      Container(
-                          child: Column(
+                    ),
+                    Container(
+                      child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 14.0, left: 5),
+                            padding: const EdgeInsets.only(top: 20.0, left: 5),
                             child: Text('Spending',
-                                style: TextStyle(fontSize: 24)),
+                                style: TextStyle(fontSize: 16)),
                           ),
                         ],
-                      )),
-                    ])),
-              ],
-            )),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
