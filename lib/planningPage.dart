@@ -16,7 +16,7 @@ class _PlanningPageState extends State<PlanningPage> {
     return ListView(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 12),
+          padding: const EdgeInsets.only(top: 22),
           child: BudgetsContainerBar(),
         ),
         Padding(
@@ -24,7 +24,7 @@ class _PlanningPageState extends State<PlanningPage> {
           child: BudgetsBox(),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 12),
+          padding: const EdgeInsets.only(top: 22),
           child: GoalsContainerBar(),
         ),
         Padding(
@@ -32,7 +32,7 @@ class _PlanningPageState extends State<PlanningPage> {
           child: GoalBox(),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 12),
+          padding: const EdgeInsets.only(top: 22),
           child: PlanPaymentContainerBar(),
         ),
         Padding(
