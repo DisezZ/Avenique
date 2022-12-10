@@ -19,7 +19,7 @@ class _AccountDashboardState extends State<AccountDashboard> {
   Widget build(BuildContext context) {
     return Container(
         decoration: const BoxDecoration(
-            color: Colors.grey,
+            color: Color.fromARGB(255, 222, 222, 225),
             borderRadius: BorderRadius.all(Radius.circular(15))),
         height: 120,
         width: 190,
@@ -27,11 +27,11 @@ class _AccountDashboardState extends State<AccountDashboard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: const EdgeInsets.only(left: 12),
+              padding: const EdgeInsets.only(left: 15, top: 9),
               child: const Icon(
-                Icons.wallet,
+                Icons.account_balance_wallet_sharp,
                 size: 50,
-                color: Color.fromARGB(255, 82, 73, 73),
+                color: Color.fromARGB(255, 0, 0, 0),
               ),
             ),
             const Padding(
@@ -39,7 +39,7 @@ class _AccountDashboardState extends State<AccountDashboard> {
               child: Text(
                 'Account:',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 136, 136, 140),
                   fontSize: 20,
                 ),
               ),
@@ -49,7 +49,7 @@ class _AccountDashboardState extends State<AccountDashboard> {
               child: Text(
                 'Balance:',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 0, 0, 0),
                   fontSize: 20,
                 ),
               ),
@@ -73,15 +73,15 @@ class _AccountDashContainerState extends State<AccountDashContainer> {
       scrollDirection: Axis.horizontal,
       child: Row(children: [
         Padding(
-          padding: EdgeInsets.only(left: 12),
+          padding: EdgeInsets.only(left: 40),
           child: AccountDashboard(),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 12),
+          padding: const EdgeInsets.only(left: 11),
           child: AccountDashboard(),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 12),
+          padding: const EdgeInsets.only(left: 11, right: 40),
           child: AccountDashboard(),
         ),
       ]),

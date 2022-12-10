@@ -12,23 +12,28 @@ class _RecordsContainerState extends State<RecordsContainer> {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+        padding: const EdgeInsets.only(left: 27.0, right: 27.0),
         child: Container(
           decoration: BoxDecoration(
-              color: Color.fromARGB(255, 29, 246, 221),
+              color: Color.fromARGB(255, 222, 222, 225),
               borderRadius: BorderRadius.circular(16)),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Text('Records', style: TextStyle(fontSize: 21))),
+              padding: EdgeInsets.only(left: 16.0, top: 12),
+              child: Text(
+                'Last Records',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
             //DateTimeTest(),
             Padding(
-              padding: const EdgeInsets.only(left: 14, right: 14),
+              padding: const EdgeInsets.only(
+                  left: 10, right: 10, top: 6, bottom: 10),
               child: Container(
-                  height: 5,
+                  height: 2,
                   decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(8))),
             ),
             RecordsBox(),
@@ -55,27 +60,41 @@ class _RecordsBoxState extends State<RecordsBox> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 5.0),
+      padding: const EdgeInsets.only(top: 7.0, bottom: 17),
       child: Row(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 8.0),
+            padding: const EdgeInsets.only(left: 14.0),
             child: Icon(
-              Icons.emoji_food_beverage_outlined,
-              size: 42,
+              Icons.fastfood_sharp,
+              size: 32,
             ),
           ),
           Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Category Name:', style: TextStyle(fontSize: 18)),
-                  Text('Note:', style: TextStyle(fontSize: 16))
-                ],
-              ),
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 29, 246, 221),
-                  borderRadius: BorderRadius.circular(8))),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 9.0),
+                  child: Text(
+                    'Category Name:',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 9.0),
+                  child: Text(
+                    'Note:',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                )
+              ],
+            ),
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 222, 222, 225),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
           const Spacer(),
           Padding(
             padding: const EdgeInsets.only(right: 14.0),
@@ -84,11 +103,11 @@ class _RecordsBoxState extends State<RecordsBox> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('-5000 THB', style: TextStyle(fontSize: 18)),
-                    Text('Date: 12/8/2002', style: TextStyle(fontSize: 16))
+                    Text('Date: 12/8/2002', style: TextStyle(fontSize: 14))
                   ],
                 ),
                 decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 29, 246, 221),
+                    color: Color.fromARGB(255, 222, 222, 225),
                     borderRadius: BorderRadius.circular(8))),
           ),
         ],

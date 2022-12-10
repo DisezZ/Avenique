@@ -26,17 +26,17 @@ class _dashboardPageState extends State<dashboardPage> {
     //   body: Text('test'),
     // );
     return ListView(
-      children: [
+      children: const [
         Padding(
-          padding: const EdgeInsets.only(top: 12),
+          padding: EdgeInsets.only(top: 19),
           child: AccountDashContainer(),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 12),
+          padding: EdgeInsets.only(top: 47),
           child: BalanceTrendContainer(),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 12),
+          padding: EdgeInsets.only(top: 19),
           child: RecordsContainer(),
         ),
       ],
