@@ -31,15 +31,21 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int index = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //backgroundColor: const Color.fromARGB(255, 248, 248, 248),
-        title: const Text("Avenique"),
+        centerTitle: false,
+        backgroundColor: const Color.fromARGB(255, 249, 249, 249),
+        title: const Text(
+          "Avenique",
+          style: TextStyle(
+            color: Color.fromARGB(255, 102, 165, 255),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
-      body: StatPage(),
+      body: const dashboardPage(),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: const Color.fromARGB(255, 96, 197, 255),
         unselectedItemColor: const Color.fromARGB(255, 144, 144, 144),
