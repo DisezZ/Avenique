@@ -30,7 +30,7 @@ class CustomColorScheme {
   // Define color use for dark scheme
   static const primaryDark = Color(0xFF66A3FF);
   static const secondaryDark = Color(0xFFFF66EF);
-  static const backgroundDark = Color(0xFF000000);
+  static const backgroundDark = Color(0xFF181D24);
   static const surfaceDark = Color(0xFF212831);
 
   // Define light color scheme

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,9 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:decimal/decimal.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences_android/shared_preferences_android.dart';
+import 'package:shared_preferences_ios/shared_preferences_ios.dart';
 
 // Project imports:
 import '';
@@ -21,14 +25,19 @@ import 'src/features/payment/domain/payment.dart';
 import 'src/features/record/domain/record.dart';
 import 'src/utils/object_box.dart';
 
-late ObjectBox objectBox;
+// late ObjectBox objectBox;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  objectBox = await ObjectBox.create();
+  // DartPluginRegistrant.ensureInitialized();
+  final objectBox = await ObjectBox.create();
+//   if (Platform.isAndroid) SharedPreferencesAndroid.registerWith();
+// if (Platform.isIOS) SharedPreferencesIOS.registerWith();
+  final sharedPreferences = await SharedPreferences.getInstance();
+
   final accountRepo = LocalAccountRepository(store: objectBox.store);
   //final accountBloc = AccountBloc(accountRepository: accountRepo);
-  runApp(MyApp(objectBox: objectBox));
+  runApp(MyApp(objectBox: objectBox, sharedPreferences: sharedPreferences));
 
   final accountBox = objectBox.store.box<Account>();
   try {

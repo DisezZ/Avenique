@@ -5,29 +5,40 @@ import 'package:avenique/src/features/account/domain/account.dart';
 import 'package:avenique/src/features/account/edit/bloc/edit_account_bloc.dart';
 import 'package:avenique/src/features/account/presentation/account_list/account_card_list.dart';
 import 'package:avenique/src/features/account/presentation/screen/edit_account_screen.dart';
+import 'package:avenique/src/features/home/presentation/screen/help_screen.dart';
+import 'package:avenique/src/features/home/presentation/screen/planning_screen.dart';
+import 'package:avenique/src/features/home/presentation/screen/statistic_screen.dart';
+import 'package:avenique/src/features/record/presentation/record_list/record_tile.dart';
 import 'package:avenique/src/features/record/presentation/screen/edit_record_screen.dart';
 import 'package:avenique/src/features/record/presentation/screen/records_overview.dart';
 import 'package:avenique/src/routing/app_router.dart';
 import 'package:avenique/src/utils/color.dart';
 import 'package:color_blindness/color_blindness.dart';
 import 'package:color_blindness/color_blindness_color_scheme.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:faker/faker.dart';
 import 'package:flex_seed_scheme/flex_seed_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../objectbox.g.dart';
 import 'features/category/data/category_repository.dart';
+import 'features/home/presentation/screen/dashboard_screen.dart';
 import 'features/record/data/record_repository.dart';
+import 'features/setting/bloc/setting_bloc.dart';
 import 'utils/object_box.dart';
 
 class MyApp extends StatefulWidget {
-  final ObjectBox objectBox;
   MyApp({
     super.key,
     required this.objectBox,
+    required this.sharedPreferences,
   });
+
+  final ObjectBox objectBox;
+  final SharedPreferences sharedPreferences;
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -35,13 +46,16 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   //final _appRouter = AppRouter();
-  final store = objectBox.store;
 
   @override
   Widget build(BuildContext context) {
+    final store = widget.objectBox.store;
     final _repositoryProviders = [
       RepositoryProvider<Store>.value(
-        value: objectBox.store,
+        value: widget.objectBox.store,
+      ),
+      RepositoryProvider<SharedPreferences>.value(
+        value: widget.sharedPreferences,
       ),
       RepositoryProvider<AccountRepository>(
           create: (_) => LocalAccountRepository(store: store)),
@@ -74,59 +88,122 @@ class _MyAppState extends State<MyApp> {
     //   tones: FlexTones.material(Brightness.dark),
     // );
 
-    final colorBlindnessType = ColorBlindnessType.none;
+    const colorBlindnessType = ColorBlindnessType.none;
 
-    final lightScheme = colorBlindnessColorScheme(
-      CustomColorScheme.lightScheme,
-      colorBlindnessType,
-    );
-    final darkScheme = colorBlindnessColorScheme(
-      CustomColorScheme.darkScheme,
-      colorBlindnessType,
-    );
+    // final lightScheme = colorBlindnessColorScheme(
+    //   CustomColorScheme.lightScheme,
+    //   colorBlindnessType,
+    // );
+    // final darkScheme = colorBlindnessColorScheme(
+    //   CustomColorScheme.darkScheme,
+    //   colorBlindnessType,
+    // );
 
-    final lightTheme = ThemeData(
-      colorScheme: lightScheme,
-      scaffoldBackgroundColor: lightScheme.background,
-      appBarTheme: AppBarTheme(
-        backgroundColor: lightScheme.primary,
-        foregroundColor: lightScheme.onPrimary,
-        elevation: 0,
-      ),
-      cardTheme: CardTheme(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: Colors.grey),
-        ),
-        elevation: 0,
-      ),
-    );
+    // final lightTheme = ThemeData(
+    //   useMaterial3: true,
+    //   colorScheme: lightScheme,
+    //   scaffoldBackgroundColor: lightScheme.background,
+    //   appBarTheme: AppBarTheme(
+    //     backgroundColor: lightScheme.primary,
+    //     foregroundColor: lightScheme.onPrimary,
+    //     elevation: 0,
+    //   ),
+    //   bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    //     backgroundColor: lightScheme.surface,
+    //     selectedItemColor: lightScheme.primary,
+    //     //unselectedItemColor: ,
+    //   ),
+    //   cardTheme: CardTheme(
+    //     shape: RoundedRectangleBorder(
+    //       borderRadius: BorderRadius.circular(16),
+    //       side: BorderSide(color: Colors.grey),
+    //     ),
+    //     elevation: 0,
+    //   ),
+    // );
 
-    final darkTheme = ThemeData(
-      colorScheme: darkScheme,
-      //scaffoldBackgroundColor: darkScheme.background,
-      appBarTheme: AppBarTheme(
-        backgroundColor: darkScheme.surface,
-        foregroundColor: darkScheme.onSurface,
-        elevation: 0,
-      ),
-      cardTheme: CardTheme(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: Colors.grey),
-        ),
-        elevation: 0,
-      ),
-    );
+    // final darkTheme = ThemeData(
+    //   colorScheme: darkScheme,
+    //   scaffoldBackgroundColor: darkScheme.background,
+    //   appBarTheme: AppBarTheme(
+    //     backgroundColor: darkScheme.surface,
+    //     foregroundColor: darkScheme.onSurface,
+    //     elevation: 1,
+    //     shape: Border(bottom: BorderSide(color: Colors.grey)),
+    //   ),
+    //   cardTheme: CardTheme(
+    //     shape: RoundedRectangleBorder(
+    //       borderRadius: BorderRadius.circular(16),
+    //       side: BorderSide(color: Colors.grey),
+    //     ),
+    //     elevation: 1,
+    //   ),
+    // );
+
+    final brandColor = Color(0xFF66A3FF);
+    final settingBloc =
+        SettingBloc(sharedPreferences: widget.sharedPreferences);
+    settingBloc.add(const SettingStarted());
 
     return MultiRepositoryProvider(
       providers: _repositoryProviders,
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: lightTheme,
-        darkTheme: ThemeData.dark(),
-        themeMode: ThemeMode.dark,
-        home: HomeScreen(title: 'Avenique'),
+      child: BlocProvider.value(
+        value: settingBloc,
+        child: BlocBuilder<SettingBloc, SettingState>(
+          builder: (context, state) {
+            return DynamicColorBuilder(
+              builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+                ColorScheme lightColorScheme;
+                ColorScheme darkColorScheme;
+
+                if (state.dynamicColorStatus == DynamicColorStatus.on) {
+                  if (lightDynamic != null && darkDynamic != null) {
+                    lightColorScheme = lightDynamic.harmonized()..copyWith();
+                    lightColorScheme =
+                        lightColorScheme.copyWith(secondary: brandColor);
+                    darkColorScheme = darkDynamic.harmonized()..copyWith();
+                    darkColorScheme =
+                        darkColorScheme.copyWith(secondary: brandColor);
+                  } else {
+                    lightColorScheme =
+                        ColorScheme.fromSeed(seedColor: brandColor);
+                    darkColorScheme = ColorScheme.fromSeed(
+                      seedColor: brandColor,
+                      brightness: Brightness.dark,
+                    );
+                  }
+                  lightColorScheme = colorBlindnessColorScheme(
+                      lightColorScheme, settingBloc.state.colorBlindnessType);
+                  darkColorScheme = colorBlindnessColorScheme(
+                      darkColorScheme, settingBloc.state.colorBlindnessType);
+                } else {
+                  lightColorScheme = colorBlindnessColorScheme(
+                      ColorScheme.fromSwatch(primarySwatch: Colors.blue),
+                      settingBloc.state.colorBlindnessType);
+                  darkColorScheme = colorBlindnessColorScheme(
+                      ColorScheme.fromSwatch(
+                          primarySwatch: Colors.blue,
+                          brightness: Brightness.dark),
+                      settingBloc.state.colorBlindnessType);
+                }
+
+                return MaterialApp(
+                  title: 'Flutter Demo',
+                  theme: ThemeData(
+                    useMaterial3: true,
+                    colorScheme: lightColorScheme,
+                  ),
+                  darkTheme: ThemeData(
+                    useMaterial3: true,
+                    colorScheme: darkColorScheme,
+                  ),
+                  themeMode: settingBloc.state.themeMode,
+                  home: HomeScreen(title: 'Avenique'),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
@@ -142,15 +219,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  final repo = LocalAccountRepository(store: objectBox.store);
+  int _selectedIndex = 0;
+  final screens = [
+    DashboardScreen(),
+    PlanningScreen(),
+    StatisticScreen(),
+    HelpScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -159,148 +234,32 @@ class _HomeScreenState extends State<HomeScreen> {
       account: null,
     );
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.settings),
-          )
-        ],
-      ),
-
-      body: ListView(
-        children: [
-          StreamBuilder(
-            stream: repo.getAll(),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Account>> snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                final accounts = snapshot.data!;
-                return AccountCardList(accounts: accounts);
-              }
-            },
+      body: screens[_selectedIndex],
+      bottomNavigationBar: NavigationBar(
+        height: 60,
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: (value) => setState(() {
+          _selectedIndex = value;
+        }),
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.developer_board),
+            label: 'Dashboard',
           ),
-          ElevatedButton(
-            // onPressed: () => Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (_) => BlocProvider.value(
-            //       value: bloc,
-            //       child: AddAccountScreen(),
-            //     ),
-            //   ),
-            // ),
-            onPressed: () => Navigator.of(context).push(
-              EditAccountScreen.route(context: context),
-            ),
-            // onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-            //   builder: (_) => BlocProvider<EditAccountBloc>(
-            //     create: (_) => EditAccountBloc(
-            //       accountRepository:
-            //           RepositoryProvider.of<AccountRepository>(context),
-            //       account: null,
-            //     ),
-            //     child: const AddAccountScreen(),
-            //   ),
-            // )),
-            child: const Text('add account'),
+          NavigationDestination(
+            icon: Icon(Icons.emoji_flags_rounded),
+            label: 'Planning',
           ),
-          ElevatedButton(
-            onPressed: () => Navigator.of(context)
-                .push(RecordsOverviewScreen.route(context: context)),
-            child: const Text('records overview'),
+          NavigationDestination(
+            icon: Icon(Icons.bar_chart_rounded),
+            label: 'Statistic',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.help),
+            label: 'Help',
           ),
         ],
       ),
-      // body: Center(
-      //   // Center is a layout widget. It takes a single child and positions it
-      //   // in the middle of the parent.
-      //   child: Column(
-      //     // Column is also a layout widget. It takes a list of children and
-      //     // arranges them vertically. By default, it sizes itself to fit its
-      //     // children horizontally, and tries to be as tall as its parent.
-      //     //
-      //     // Invoke "debug painting" (press "p" in the console, choose the
-      //     // "Toggle Debug Paint" action from the Flutter Inspector in Android
-      //     // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-      //     // to see the wireframe for each widget.
-      //     //
-      //     // Column has various properties to control how it sizes itself and
-      //     // how it positions its children. Here we use mainAxisAlignment to
-      //     // center the children vertically; the main axis here is the vertical
-      //     // axis because Columns are vertical (the cross axis would be
-      //     // horizontal).
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: <Widget>[
-      //       const Text(
-      //         'You have pushed the button this many times:',
-      //       ),
-      //       Text(
-      //         '$_counter',
-      //         style: Theme.of(context).textTheme.headline4,
-      //       ),
-      //     ],
-      //   ),
-      // ),
-
-      // body: StreamBuilder(
-      //   stream: repo.getAll(),
-      //   builder: (BuildContext context, AsyncSnapshot<List<Account>> snapshot) {
-      //     if (!snapshot.hasData) {
-      //       return const Center(
-      //         child: CircularProgressIndicator(),
-      //       );
-      //     } else {
-      //       final accounts = snapshot.data!;
-      //       return AccountCardList(accounts: accounts);
-      //     }
-      //   },
-      // ),
-
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        //onPressed: _incrementCounter,
-        onPressed: () async => Navigator.of(context)
-            .push(await EditRecordScreen.route(context, null)),
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
-
-    // return CupertinoPageScaffold(
-    //   navigationBar: CupertinoNavigationBar(
-    //     leading: Row(
-    //       mainAxisAlignment: MainAxisAlignment.start,
-    //       children: [
-    //         Text(
-    //           'Avenique',
-    //           style: TextStyle(
-    //             fontSize: 18,
-    //             fontWeight: FontWeight.w500,
-    //             color: CupertinoTheme.of(context).primaryColor,
-    //           ),
-    //         )
-    //       ],
-    //     ),
-    //     trailing: CupertinoButton(
-    //       onPressed: () {},
-    //       padding: EdgeInsets.zero,
-    //       child: const Icon(Icons.settings),
-    //     ),
-    //   ),
-    //   child: Scaffold(
-    //     floatingActionButton: FloatingActionButton(
-    //       onPressed: () async => Navigator.of(context)
-    //           .push(await EditRecordScreen.route(context, null)),
-    //       tooltip: 'Add Record',
-    //       backgroundColor: CupertinoTheme.of(context).primaryColor,
-    //       child: const Icon(CupertinoIcons.plus),
-    //     ),
-    //   ),
-    // );
   }
 }

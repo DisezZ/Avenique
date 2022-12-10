@@ -50,6 +50,7 @@ class EditRecordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const isNew = false;
+    
     final editRecordBloc = BlocProvider.of<EditRecordBloc>(context);
     editRecordBloc.add(EditRecordStarted());
 

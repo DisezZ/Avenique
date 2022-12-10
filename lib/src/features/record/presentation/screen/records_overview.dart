@@ -75,7 +75,6 @@ class RecordsOverviewScreen extends StatelessWidget {
   Widget buildGroupedRecords(
       BuildContext context, MapEntry<DateTime, List<Record>> recordGrouped) {
     return Card(
-      color: Theme.of(context).colorScheme.surface,
       child: Container(
         padding: const EdgeInsets.all(16),
         child: Column(
