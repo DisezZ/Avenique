@@ -30,31 +30,50 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //backgroundColor: const Color.fromARGB(255, 248, 248, 248),
         title: const Text("Avenique"),
       ),
       body: StatPage(),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1,
-        items: const <BottomNavigationBarItem>[
+        selectedItemColor: const Color.fromARGB(255, 96, 197, 255),
+        unselectedItemColor: const Color.fromARGB(255, 144, 144, 144),
+        currentIndex: index,
+        onTap: (int num) {
+          setState(() {
+            index = num;
+          });
+        },
+        items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.developer_board, color: Colors.blue),
-            label: 'First Icon',
+            //backgroundColor: Color.fromARGB(255, 233, 233, 233),
+            label: 'Dashboard',
+            icon: Icon(
+              Icons.featured_play_list_outlined,
+            ),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.emoji_flags_rounded, color: Colors.blue),
-            label: 'Second Icon',
+            label: 'Planning',
+            icon: Icon(
+              Icons.flag_sharp,
+            ),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart_rounded, color: Colors.blue),
-            label: 'Third Icon',
+            label: 'Statistic',
+            icon: Icon(
+              Icons.auto_graph,
+            ),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.help, color: Colors.blue),
-            label: 'Fourth Icon',
+            label: 'Help',
+            icon: Icon(
+              Icons.help_center,
+            ),
           ),
         ],
       ),

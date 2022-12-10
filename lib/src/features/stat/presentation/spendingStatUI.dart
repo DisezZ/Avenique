@@ -19,29 +19,38 @@ class _SpendingPieCStatContainerState extends State<SpendingPieCStatContainer> {
         padding: const EdgeInsets.only(left: 12.0, right: 12.0),
         child: Container(
           decoration: BoxDecoration(
-              color: Color.fromARGB(255, 29, 246, 221),
+              color: Color.fromARGB(255, 45, 45, 45),
               borderRadius: BorderRadius.circular(16)),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Text('Categories', style: TextStyle(fontSize: 21))),
-            //DateTimeTest(),
-            Padding(
-              padding: const EdgeInsets.only(left: 21, right: 21),
-              child: Container(
-                  height: 5,
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(8))),
-            ),
-            Container(
-              child: PieChartSample2(),
-            ),
-            Container(
-              child: LineChartSample2(),
-            )
-          ]),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 15.0, top: 15.0),
+                child: Text(
+                  'Categories',
+                  style: TextStyle(
+                      fontSize: 21,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              //DateTimeTest(),
+              Padding(
+                padding: const EdgeInsets.only(left: 21, right: 21),
+                child: Container(
+                    height: 5,
+                    decoration: BoxDecoration(
+                        //color: Colors.red,
+                        borderRadius: BorderRadius.circular(8))),
+              ),
+              Container(
+                child: PieChartSample2(),
+              ),
+              Container(
+                child: LineChartSample2(),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -96,27 +105,31 @@ class PieChart2State extends State {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const <Widget>[
                 Indicator(
                   color: Color(0xff0293ee),
                   text: 'First',
+                  textColor: Color(0xffffffff),
                   isSquare: true,
                 ),
                 Indicator(
                   color: Color(0xfff8b250),
                   text: 'Second',
+                  textColor: Color(0xffffffff),
                   isSquare: true,
                 ),
                 Indicator(
                   color: Color(0xff845bef),
                   text: 'Third',
+                  textColor: Color(0xffffffff),
                   isSquare: true,
                 ),
                 Indicator(
                   color: Color(0xff13d38e),
                   text: 'Fourth',
+                  textColor: Color(0xffffffff),
                   isSquare: true,
                 ),
               ],
@@ -130,7 +143,7 @@ class PieChart2State extends State {
   List<PieChartSectionData> showingSections() {
     return List.generate(4, (i) {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 32.0 : 24.0;
+      final fontSize = isTouched ? 32.0 : 17.0;
       final radius = isTouched ? 70.0 : 60.0;
       switch (i) {
         case 0:
@@ -260,14 +273,14 @@ class _LineChartSample2State extends State<LineChartSample2> {
               borderRadius: BorderRadius.all(
                 Radius.circular(18),
               ),
-              color: Color.fromARGB(255, 102, 106, 110),
+              color: Color.fromARGB(255, 45, 45, 45),
             ),
             child: Padding(
               padding: const EdgeInsets.only(
-                right: 18,
+                right: 38,
                 left: 12,
-                top: 24,
-                bottom: 12,
+                top: 40,
+                bottom: 1,
               ),
               child: LineChart(
                 mainData(),
@@ -287,9 +300,9 @@ class _LineChartSample2State extends State<LineChartSample2> {
     String caseDateTwenty = getDateMonth(10);
     String caseDateTwentyfive = getDateMonth(5);
     const style = TextStyle(
-      color: Color.fromARGB(255, 177, 188, 199),
+      color: Color.fromARGB(255, 255, 255, 255),
       fontWeight: FontWeight.bold,
-      fontSize: 12,
+      fontSize: 11,
     );
     Widget text;
     switch (value.toInt()) {
@@ -329,7 +342,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
     const style = TextStyle(
       color: Color.fromARGB(255, 237, 239, 240),
       fontWeight: FontWeight.bold,
-      fontSize: 15,
+      fontSize: 14,
     );
     String text;
     switch (value.toInt()) {
@@ -366,8 +379,8 @@ class _LineChartSample2State extends State<LineChartSample2> {
         */
         getDrawingVerticalLine: (value) {
           return FlLine(
-            color: Color.fromARGB(255, 0, 0, 0),
-            strokeWidth: 1,
+            color: Color.fromARGB(255, 118, 118, 118),
+            strokeWidth: 0.5,
           );
         },
       ),
@@ -382,7 +395,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 30,
+            reservedSize: 80,
             interval: 1,
             getTitlesWidget: bottomTitleWidgets,
           ),
@@ -398,7 +411,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
       ),
       borderData: FlBorderData(
         show: true,
-        border: Border.all(color: const Color(0xff37434d)),
+        border: Border.all(color: Color.fromARGB(255, 118, 118, 118)),
       ),
       minX: 0,
       maxX: 30,
@@ -411,7 +424,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
           gradient: LinearGradient(
             colors: gradientColors,
           ),
-          barWidth: 5,
+          barWidth: 2,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: false,
@@ -420,7 +433,9 @@ class _LineChartSample2State extends State<LineChartSample2> {
             show: true,
             gradient: LinearGradient(
               colors: gradientColors
-                  .map((color) => color.withOpacity(0.3))
+                  .map(
+                    (color) => color.withOpacity(0.3),
+                  )
                   .toList(),
             ),
           ),
