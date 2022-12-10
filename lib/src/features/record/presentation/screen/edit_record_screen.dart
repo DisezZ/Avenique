@@ -33,6 +33,7 @@ class EditRecordScreen extends StatelessWidget {
     //       ..category.target = initialCategory;
 
     return MaterialPageRoute(
+      fullscreenDialog: true,
       builder: (_) => BlocProvider<EditRecordBloc>(
         create: (_) => EditRecordBloc(
           store: RepositoryProvider.of<Store>(context),
@@ -50,7 +51,7 @@ class EditRecordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const isNew = false;
-    
+
     final editRecordBloc = BlocProvider.of<EditRecordBloc>(context);
     editRecordBloc.add(EditRecordStarted());
 
@@ -62,8 +63,11 @@ class EditRecordScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: editRecordBloc.state.isNew
-              ? Text('Add Record')
-              : Text('Edit Record'),
+              ? Text('Add record')
+              : Text('Edit record'),
+          // actions: [
+          //   TextButton(onPressed: () {}, child: Text('Add')),
+          // ],
         ),
         body: BlocBuilder<EditRecordBloc, EditRecordState>(
           builder: (context, state) {
@@ -83,8 +87,7 @@ class EditRecordScreen extends StatelessWidget {
                             'Income': buildSegment('Income'),
                           },
                           onValueChanged: (type) => editRecordBloc.add(
-                            EditRecordTypeChanged(
-                                type: type ?? state.type),
+                            EditRecordTypeChanged(type: type ?? state.type),
                           ),
                         ),
                       ),
@@ -98,8 +101,7 @@ class EditRecordScreen extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () async {
                           final result = await Navigator.of(context).push(
-                              EditRecordNoteScreen.route(
-                                  context, state.note));
+                              EditRecordNoteScreen.route(context, state.note));
                           if (result != null) {
                             editRecordBloc
                                 .add(EditRecordNoteChanged(note: result));
@@ -109,8 +111,7 @@ class EditRecordScreen extends StatelessWidget {
                       ),
                       ListTile(
                         title: Text('Account'),
-                        trailing:
-                            Text('${state.account?.name ?? 'None'} >'),
+                        trailing: Text('${state.account?.name ?? 'None'} >'),
                         onTap: () async {
                           final result = await Navigator.of(context)
                               .push(SelectAccountScreen.route(context));
@@ -123,8 +124,7 @@ class EditRecordScreen extends StatelessWidget {
                       ),
                       ListTile(
                         title: Text('Category'),
-                        trailing:
-                            Text('${state.category?.name ?? 'None'} >'),
+                        trailing: Text('${state.category?.name ?? 'None'} >'),
                         onTap: () async {
                           final result = await Navigator.of(context)
                               .push(SelectCategoryScreen.route(context));

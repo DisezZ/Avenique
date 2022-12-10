@@ -45,7 +45,7 @@ class RecordsOverviewScreen extends StatelessWidget {
           } else if (snapshot.hasData) {
             final records = snapshot.data!;
 
-            final groupedRecords = groupRecordToMap(records);
+            final groupedRecords = groupRecordToDateMap(records);
             return Padding(
               padding: EdgeInsets.all(24),
               child: buildGroupedRecordsList(context, groupedRecords),
@@ -92,7 +92,7 @@ class RecordsOverviewScreen extends StatelessWidget {
     );
   }
 
-  Map<DateTime, List<Record>> groupRecordToMap(List<Record> records) {
+  static Map<DateTime, List<Record>> groupRecordToDateMap(List<Record> records) {
     Map<DateTime, List<Record>> map = {};
     records.forEach((element) {
       map[DateTime(element.date.year, element.date.month, element.date.day)] ??=

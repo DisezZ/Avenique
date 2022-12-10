@@ -1,5 +1,6 @@
 import 'package:avenique/src/features/account/data/account_repository.dart';
 import 'package:avenique/src/features/setting/presentation/screen/setting_screen.dart';
+import 'package:avenique/src/features/statistics/presentation/balance_trend.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,14 +11,20 @@ import '../../../record/data/record_repository.dart';
 import '../../../record/presentation/record_list/record_tile.dart';
 import '../../../record/presentation/screen/edit_record_screen.dart';
 import '../../../record/presentation/screen/records_overview.dart';
+import '../../../statistics/presentation/balance_stat.dart';
+import '../../../statistics/presentation/stat.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final accountRepository =
-        LocalAccountRepository(store: RepositoryProvider.of<Store>(context));
+    final accountRepository = RepositoryProvider.of<AccountRepository>(context);
+    final recordRepository = RepositoryProvider.of<RecordRepository>(context);
+
+    final accountStream = accountRepository.getAll().asBroadcastStream();
+    final recordStream = recordRepository.getAll().asBroadcastStream();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Avenique'),
@@ -32,8 +39,8 @@ class DashboardScreen extends StatelessWidget {
       body: ListView(
         children: [
           SizedBox(height: 16),
-          StreamBuilder(
-            stream: accountRepository.getAll(),
+          StreamBuilder<List<Account>>(
+            stream: accountStream,
             builder:
                 (BuildContext context, AsyncSnapshot<List<Account>> snapshot) {
               if (!snapshot.hasData) {
@@ -50,29 +57,7 @@ class DashboardScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                Card(
-                  child: Container(
-                    padding: EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Balance Trend'),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Icon(Icons.more_horiz),
-                            ),
-                          ],
-                        ),
-                        Divider(
-                          color: Colors.grey,
-                          thickness: 1,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                BalanceTrend(),
                 Card(
                   child: Container(
                     padding: EdgeInsets.all(16),
@@ -95,9 +80,7 @@ class DashboardScreen extends StatelessWidget {
                           thickness: 1,
                         ),
                         StreamBuilder(
-                          stream:
-                              RepositoryProvider.of<RecordRepository>(context)
-                                  .getAll(),
+                          stream: recordStream,
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
                               return const Center(
@@ -125,6 +108,8 @@ class DashboardScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 16),
+          BalanceTrendContainer(),
+          SizedBox(height: 500),
         ],
       ),
       floatingActionButton: FloatingActionButton(

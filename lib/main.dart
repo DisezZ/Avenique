@@ -54,10 +54,11 @@ void main() async {
   cleanMockupDatbase(objectBox.store);
   createMockupDatabase(objectBox.store);
   for (var i = 0; i < 10; i++) {
-    await Future.delayed(
-        const Duration(seconds: 1),
-        () => accountBox
-            .put(Account(name: Faker().person.name(), balance: '90.99')));
+    // await Future.delayed(
+    //     const Duration(seconds: 1),
+    //     () => accountBox
+    //         .put(Account(name: Faker().person.name(), balance: '90.99')));
+    accountBox.put(Account(name: Faker().person.name(), balance: '90.99'));
   }
 }
 
@@ -96,18 +97,21 @@ void createMockupDatabase(Store store) {
         type: 'Expense',
         amount: '0.1',
         note: 'for test 1',
-        date: DateTime.now())
+        date: DateTime(2022, 12, 11))
       ..account.target = accounts[0]
       ..category.target = categories[0],
     Record(
-        type: 'Income', amount: '0.2', note: 'for test 2', date: DateTime.now())
+        type: 'Income',
+        amount: '0.2',
+        note: 'for test 2',
+        date: DateTime(2022, 12, 7))
       ..account.target = accounts[1]
       ..category.target = categories[2],
     Record(
         type: 'Expense',
         amount: '0.3',
         note: 'for test 3',
-        date: DateTime.now())
+        date: DateTime(2022, 11, 30))
       ..account.target = accounts[0]
       ..category.target = categories[1],
     // Record(type: 'Income', amount: '0.4', date: DateTime.now()),
