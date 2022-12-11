@@ -13,7 +13,6 @@ import 'package:shared_preferences_android/shared_preferences_android.dart';
 import 'package:shared_preferences_ios/shared_preferences_ios.dart';
 
 // Project imports:
-import '';
 import 'objectbox.g.dart';
 import 'src/app.dart';
 import 'src/features/account/data/account_repository.dart';
