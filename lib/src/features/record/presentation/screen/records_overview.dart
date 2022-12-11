@@ -33,7 +33,6 @@ class RecordsOverviewScreen extends StatelessWidget {
     final recordRepository = RepositoryProvider.of<RecordRepository>(context);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: Text('Records'),
       ),
@@ -92,7 +91,8 @@ class RecordsOverviewScreen extends StatelessWidget {
     );
   }
 
-  static Map<DateTime, List<Record>> groupRecordToDateMap(List<Record> records) {
+  static Map<DateTime, List<Record>> groupRecordToDateMap(
+      List<Record> records) {
     Map<DateTime, List<Record>> map = {};
     records.forEach((element) {
       map[DateTime(element.date.year, element.date.month, element.date.day)] ??=

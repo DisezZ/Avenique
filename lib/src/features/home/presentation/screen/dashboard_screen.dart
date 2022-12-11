@@ -107,9 +107,9 @@ class DashboardScreen extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 16),
-          BalanceTrendContainer(),
-          SizedBox(height: 500),
+          // SizedBox(height: 16),
+          // BalanceTrendContainer(),
+          // SizedBox(height: 500),
         ],
       ),
       floatingActionButton: FloatingActionButton(

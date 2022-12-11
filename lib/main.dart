@@ -58,7 +58,7 @@ void main() async {
     //     const Duration(seconds: 1),
     //     () => accountBox
     //         .put(Account(name: Faker().person.name(), balance: '90.99')));
-    accountBox.put(Account(name: Faker().person.name(), balance: '90.99'));
+    //accountBox.put(Account(name: Faker().person.name(), balance: '90.99'));
   }
 }
 
@@ -95,23 +95,23 @@ void createMockupDatabase(Store store) {
   final records = [
     Record(
         type: 'Expense',
-        amount: '0.1',
+        amount: '45',
         note: 'for test 1',
         date: DateTime(2022, 12, 11))
       ..account.target = accounts[0]
       ..category.target = categories[0],
     Record(
         type: 'Income',
-        amount: '0.2',
+        amount: '9000',
         note: 'for test 2',
-        date: DateTime(2022, 12, 7))
+        date: DateTime(2022, 11, 26))
       ..account.target = accounts[1]
       ..category.target = categories[2],
     Record(
         type: 'Expense',
-        amount: '0.3',
+        amount: '65',
         note: 'for test 3',
-        date: DateTime(2022, 11, 30))
+        date: DateTime(2022, 12, 11))
       ..account.target = accounts[0]
       ..category.target = categories[1],
     // Record(type: 'Income', amount: '0.4', date: DateTime.now()),
