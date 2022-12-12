@@ -174,11 +174,7 @@ class EditRecordScreen extends StatelessWidget {
                               title: Text('Date'),
                               trailing: Text(
                                   '${DateFormat('E, dd MMM yyyy').format(state.dateTime)} >'),
-                              onTap: () => DatePicker.showDatePicker(
-                                context,
-                                onConfirm: (date) => editRecordBloc.add(
-                                    EditRecordDateTimeChanged(dateTime: date)),
-                              ),
+                              onTap: () => _selectDate(context),
                             ),
                             Divider(
                               color: Colors.grey,
@@ -241,5 +237,20 @@ class EditRecordScreen extends StatelessWidget {
       onPressed: () => editRecordBloc.add(EditRecordDeleted()),
       icon: const Icon(Icons.delete),
     );
+  }
+
+  void _selectDate(BuildContext context) async {
+    final now = DateTime.now();
+    final DateTime? newDate = await showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: DateTime(now.year - 5),
+      lastDate: DateTime(now.year + 5),
+      helpText: 'Select a date',
+    );
+    if (newDate != null) {
+      BlocProvider.of<EditRecordBloc>(context)
+          .add(EditRecordDateTimeChanged(dateTime: newDate));
+    }
   }
 }

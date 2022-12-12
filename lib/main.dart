@@ -65,7 +65,7 @@ void createMockupDatabase(Store store) {
   final accountBox = store.box<Account>();
   final recordBox = store.box<Record>();
   final budgetBox = store.box<Budget>();
-  final goaltBox = store.box<Goal>();
+  final goalBox = store.box<Goal>();
   final paymentBox = store.box<Payment>();
   final categoryBox = store.box<Category>();
 
@@ -118,10 +118,32 @@ void createMockupDatabase(Store store) {
   ];
   recordBox.putMany(records);
 
-  accountBox.get(1)!.records.forEach((element) {
-    print(
-        'Record: amount-${element.amount} category-${element.category.target?.name}');
-  });
+  final goals = [
+    Goal(
+      name: 'Test Goal 1',
+      targetAmount: '111',
+      currentAmount: '11',
+      endDate: DateTime(2022, 12, 15),
+    ),
+    Goal(
+      name: 'Test Goal 2',
+      targetAmount: '222',
+      currentAmount: '22',
+      endDate: DateTime.now(),
+    ),
+    Goal(
+      name: 'Test Goal 3',
+      targetAmount: '333',
+      currentAmount: '33',
+      endDate: DateTime.now(),
+    ),
+  ];
+  goalBox.putMany(goals);
+
+  // accountBox.get(1)!.records.forEach((element) {
+  //   print(
+  //       'Record: amount-${element.amount} category-${element.category.target?.name}');
+  // });
 }
 
 void cleanMockupDatbase(Store store) async {

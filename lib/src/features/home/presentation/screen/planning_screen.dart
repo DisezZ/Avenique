@@ -1,3 +1,4 @@
+import 'package:avenique/src/features/goal/presentation/screen/goals_overview_screen.dart';
 import 'package:flutter/material.dart';
 
 class PlanningScreen extends StatelessWidget {
@@ -5,10 +6,18 @@ class PlanningScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const planningList = [
-      Card(child: ListTile(title: Text('Payment'))),
+    final planningList = [
+      Card(
+          child: ListTile(
+        title: Text('Payment'),
+      )),
       Card(child: ListTile(title: Text('Budget'))),
-      Card(child: ListTile(title: Text('Goal'))),
+      Card(
+          child: ListTile(
+        title: Text('Goal'),
+        onTap: () =>
+            Navigator.of(context).push(GoalsOverviewScreen.route(context)),
+      )),
     ];
 
     return Scaffold(

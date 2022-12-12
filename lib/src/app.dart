@@ -5,6 +5,7 @@ import 'package:avenique/src/features/account/domain/account.dart';
 import 'package:avenique/src/features/account/edit/bloc/edit_account_bloc.dart';
 import 'package:avenique/src/features/account/presentation/account_list/account_card_list.dart';
 import 'package:avenique/src/features/account/presentation/screen/edit_account_screen.dart';
+import 'package:avenique/src/features/goal/data/goal_repository.dart';
 import 'package:avenique/src/features/home/presentation/screen/help_screen.dart';
 import 'package:avenique/src/features/home/presentation/screen/planning_screen.dart';
 import 'package:avenique/src/features/home/presentation/screen/statistic_screen.dart';
@@ -24,9 +25,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../objectbox.g.dart';
+import 'features/budget/data/budget_repository.dart';
 import 'features/home/presentation/screen/statistic_screen.dart';
 import 'features/category/data/category_repository.dart';
 import 'features/home/presentation/screen/dashboard_screen.dart';
+import 'features/payment/data/payment_repository.dart';
 import 'features/record/data/record_repository.dart';
 import 'features/setting/bloc/setting_bloc.dart';
 import 'utils/object_box.dart';
@@ -64,6 +67,12 @@ class _MyAppState extends State<MyApp> {
           create: (_) => LocalRecordRepository(store: store)),
       RepositoryProvider<CategoryRepository>(
           create: (_) => LocalCategoryRepository(store: store)),
+      RepositoryProvider<GoalRepository>(
+          create: (context) => LocalGoalRepository(store: store)),
+      RepositoryProvider<BudgetRepository>(
+          create: (context) => LocalBudgetRepository(store: store)),
+      RepositoryProvider<PaymentRepository>(
+          create: (context) => LocalPaymentRepository(store: store)),
     ];
 
     // Define your seed colors.

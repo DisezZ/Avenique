@@ -9,7 +9,7 @@ class Goal {
   String name;
 
   String targetAmount;
-  
+
   String currentAmount;
 
   @Property(type: PropertyType.date)
