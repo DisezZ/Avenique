@@ -54,26 +54,24 @@ void main() {
     });
 
     group('EditAccoutNameChanged', () {
-      setUp(() {
-        editAccountBloc = EditAccountBloc(
-            store: store, accountRepository: accountRepository, account: null);
-      });
       late Name tbdName;
+      late String name;
+
       blocTest<EditAccountBloc, EditAccountState>(
         '''
                 the bloc should emit EditAccountState() when 
                 ''',
         setUp: () {
-          final name = 'tbdName';
+          name = 'tbdName';
           tbdName = Name.dirty(name);
           when(() => account.name).thenReturn('');
           when(() => account.balance).thenReturn('0');
+          editAccountBloc = EditAccountBloc(
+              store: store,
+              accountRepository: accountRepository,
+              account: account);
         },
-        build: () => EditAccountBloc(
-          store: store,
-          accountRepository: accountRepository,
-          account: account,
-        ),
+        build: () => editAccountBloc,
         act: (bloc) => bloc.add(EditAccountNameChanged(tbdName: tbdName.value)),
         expect: () => [
           EditAccountState(
