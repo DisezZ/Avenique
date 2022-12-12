@@ -6,6 +6,13 @@ Avenique is a wallet management application that let you manage your wallet.
 
 This project is a starting point for a Flutter application.
 
+To run this project, you need either iOS, Android or emulator connect to your VSCode
+Then run
+```
+flutter pub get
+flutter run
+```
+
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
