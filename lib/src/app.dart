@@ -24,6 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../objectbox.g.dart';
+import 'features/home/presentation/screen/statistic_screen.dart';
 import 'features/category/data/category_repository.dart';
 import 'features/home/presentation/screen/dashboard_screen.dart';
 import 'features/record/data/record_repository.dart';
@@ -229,10 +230,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = EditAccountBloc(
-      accountRepository: RepositoryProvider.of<AccountRepository>(context),
-      account: null,
-    );
+    // final bloc = EditAccountBloc(
+    //   accountRepository: RepositoryProvider.of<AccountRepository>(context),
+    //   account: null,
+    // );
     return Scaffold(
       body: screens[_selectedIndex],
       bottomNavigationBar: NavigationBar(

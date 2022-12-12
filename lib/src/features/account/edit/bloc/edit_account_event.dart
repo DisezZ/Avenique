@@ -8,18 +8,21 @@ abstract class EditAccountEvent extends Equatable {
 }
 
 // Started
+class EditAccountStarted extends EditAccountEvent {
+  const EditAccountStarted();
+}
 class EditAccountNameStarted extends EditAccountEvent {
   const EditAccountNameStarted();
 }
 
 // Changed
 class EditAccountNameChanged extends EditAccountEvent {
-  const EditAccountNameChanged({required this.name});
+  const EditAccountNameChanged({required this.tbdName});
 
-  final String name;
+  final String tbdName;
 
   @override
-  List<Object> get props => [name];
+  List<Object> get props => [tbdName];
 }
 
 class EditAccountBalanceChanged extends EditAccountEvent {
@@ -42,4 +45,14 @@ class EditAccountBalanceSubmitted extends EditAccountEvent {
 
 class EditAccountSubmitted extends EditAccountEvent {
   const EditAccountSubmitted();
+}
+
+// Canceled
+class EditAccountNameCanceled extends EditAccountEvent {
+  const EditAccountNameCanceled();
+}
+
+// Deleted
+class EditAccountDeleted extends EditAccountEvent {
+  const EditAccountDeleted();
 }

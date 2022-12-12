@@ -1,40 +1,45 @@
 part of 'edit_account_bloc.dart';
 
+enum EditAccountStatus { initial, loading, success, failure }
+
 class EditAccountState extends Equatable {
   const EditAccountState({
-    this.status = FormzStatus.pure,
+    this.status = EditAccountStatus.initial,
     required this.account,
-    required this.isNew,
-    this.name = const Name.pure(),
-    this.nameStatus = FormzStatus.pure,
-    this.balance = const Balance.pure(),
+    this.name = '',
+    this.balance = '0',
+    this.tbdName = const Name.pure(),
+    this.tbdNameStatus = FormzStatus.pure,
   });
 
-  final FormzStatus status;
-  final Account account;
-  final bool isNew;
-  final Name name;
-  final FormzStatus nameStatus;
-  final Balance balance;
+  final EditAccountStatus status;
+  final Account? account;
+  final String name;
+  final String balance;
+
+  final Name tbdName;
+  final FormzStatus tbdNameStatus;
+
+  bool get isNew => account == null;
 
   EditAccountState copyWith({
-    FormzStatus? status,
+    EditAccountStatus? status,
     Account? account,
-    bool? isNew,
-    Name? name,
-    FormzStatus? nameStatus,
-    Balance? balance,
+    String? name,
+    String? balance,
+    Name? tbdName,
+    FormzStatus? tbdNameStatus,
   }) {
     return EditAccountState(
       status: status ?? this.status,
       account: account ?? this.account,
-      isNew: isNew ?? this.isNew,
       name: name ?? this.name,
-      nameStatus: nameStatus ?? this.nameStatus,
       balance: balance ?? this.balance,
+      tbdName: tbdName ?? this.tbdName,
+      tbdNameStatus: tbdNameStatus ?? this.tbdNameStatus,
     );
   }
 
   @override
-  List<Object> get props => [status, account, name, nameStatus, balance];
+  List<Object?> get props => [status, account, name, balance, tbdName, tbdNameStatus];
 }

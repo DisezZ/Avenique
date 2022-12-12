@@ -29,7 +29,7 @@ void main() {
 
     group('constructor', () {
       test(
-        'instatntiates internal box',
+        'internal box should be instantiated',
         () async {
           when(() => store.box<Account>()).thenReturn(box);
           expect(LocalAccountRepository(store: store).accountBox, isNotNull);

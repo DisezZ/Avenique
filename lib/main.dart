@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';

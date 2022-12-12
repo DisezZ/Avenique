@@ -71,3 +71,10 @@ class EditRecordDateTimeChanged extends EditRecordEvent {
 class EditRecordSubmitted extends EditRecordEvent {
   const EditRecordSubmitted();
 }
+
+
+// Delete
+
+class EditRecordDeleted extends EditRecordEvent {
+  const EditRecordDeleted();
+}

@@ -49,6 +49,7 @@ class EditRecordBloc extends Bloc<EditRecordEvent, EditRecordState> {
     on<EditRecordCategoryChanged>(_onEditRecordCategoryChanged);
     on<EditRecordDateTimeChanged>(_onEditRecordDateTimeChanged);
     on<EditRecordSubmitted>(_onEditRecordSubmitted);
+    on<EditRecordDeleted>(_onEditRecordDeleted);
   }
 
   final Store _store;
@@ -86,6 +87,7 @@ class EditRecordBloc extends Bloc<EditRecordEvent, EditRecordState> {
     Emitter<EditRecordState> emit,
   ) {
     final amount = event.amount;
+    print(amount);
     //state.record.amount = amount;
     //print('Amount: ${state.record.amount}');
     emit(state.copyWith(amount: amount));
@@ -143,13 +145,13 @@ class EditRecordBloc extends Bloc<EditRecordEvent, EditRecordState> {
     print(state.isNew);
     try {
       if (state.isNew) {
-        final record = Record(
+        final record = (Record(
             type: state.type,
             amount: state.amount,
             note: state.note,
             date: state.dateTime)
           ..account.target = state.account
-          ..category.target = state.category;
+          ..category.target = state.category);
         var accountBalance =
             Convert.convertStringToDecimal(record.account.target!.balance);
         final recordAmount = Convert.convertStringToDecimal(record.amount);
@@ -225,6 +227,43 @@ class EditRecordBloc extends Bloc<EditRecordEvent, EditRecordState> {
     } catch (e) {
       print('Failed');
       emit(state.copyWith(status: EditRecordStatus.failure));
+    }
+  }
+
+  void _onEditRecordDeleted(
+    EditRecordDeleted event,
+    Emitter<EditRecordState> emit,
+  ) {
+    print('Try delete me!');
+    final record = state.record!;
+    if (record != null) {
+      try {
+        final account = record.account.target;
+        final recordAmount = Convert.convertStringToDecimal(record.amount);
+
+        if (account != null) {
+          final previousAccountBalance =
+              Convert.convertStringToDecimal(account.balance);
+          final newAccountBalance = previousAccountBalance +
+              recordAmount *
+                  (record.type == 'Expense'
+                      ? Decimal.fromInt(1)
+                      : Decimal.fromInt(-1));
+          account.balance = Convert.convertDecimalToString(newAccountBalance);
+          _store.runInTransaction(TxMode.write, () {
+            _recordRepository.delete(record.id);
+            _accountRepository.update(account);
+          });
+        } else {
+          _store.runInTransaction(TxMode.write, () {
+            _recordRepository.delete(record.id);
+          });
+        }
+        emit(state.copyWith(status: EditRecordStatus.success));
+      } catch (e) {
+        print('failed');
+        emit(state.copyWith(status: EditRecordStatus.failure));
+      }
     }
   }
 }

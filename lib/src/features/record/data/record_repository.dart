@@ -7,7 +7,7 @@ abstract class RecordRepository {
   Future<Record?> getOne(int id);
   int insert(Record record);
   int update(Record record);
-  bool deleteUser(int id);
+  bool delete(int id);
   void addRecord(Record record);
 }
 
@@ -38,7 +38,7 @@ class LocalRecordRepository implements RecordRepository {
   int update(Record record) => recordBox.put(record);
 
   @override
-  bool deleteUser(int id) => recordBox.remove(id);
+  bool delete(int id) => recordBox.remove(id);
 
   @override
   void addRecord(Record record) {

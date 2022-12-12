@@ -7,6 +7,7 @@ class EditRecordNoteScreen extends StatefulWidget {
 
   static Route<String?> route(BuildContext context, String initialNote) {
     return MaterialPageRoute(
+      fullscreenDialog: true,
       builder: (context) => EditRecordNoteScreen(
         initialNote: initialNote,
       ),
@@ -26,28 +27,43 @@ class _EditRecordNoteScreenState extends State<EditRecordNoteScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Note'),
-      ),
-      body: Column(
-        children: [
-          Center(
-            child: Form(
-              key: _formKey,
-              child: TextFormField(
-                initialValue: widget.initialNote,
-                onSaved: (newValue) => _note = newValue ?? _note,
-              ),
-            ),
-          ),
-          Expanded(child: Container()),
-          ElevatedButton(
+        actions: [
+          TextButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 Navigator.of(context).pop(_note);
               }
             },
-            child: Text('DONE'),
+            child: const Text('Save'),
           ),
+        ],
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(child: Container()),
+          Form(
+            key: _formKey,
+            child: TextFormField(
+              initialValue: widget.initialNote,
+              autofocus: true,
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                  hintText: 'Enter your note about record here'),
+              onSaved: (newValue) => _note = newValue ?? _note,
+            ),
+          ),
+          Expanded(child: Container()),
+          // ElevatedButton(
+          //   onPressed: () {
+          //     if (_formKey.currentState!.validate()) {
+          //       _formKey.currentState!.save();
+          //       Navigator.of(context).pop(_note);
+          //     }
+          //   },
+          //   child: Text('DONE'),
+          // ),
         ],
       ),
     );

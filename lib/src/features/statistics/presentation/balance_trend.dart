@@ -36,7 +36,7 @@ class BalanceTrend extends StatelessWidget {
                   final accounts = accountSnapshot.data!;
                   final records = recordSnapshot.data!;
 
-                  final List<int> selected = [0, 2, 3];
+                  final List<int> selected = [];
                   final Map<int, bool> selectedMap = {};
                   accounts.asMap().forEach((key, value) =>
                       selected.contains(key)
@@ -138,9 +138,10 @@ class BalanceTrend extends StatelessWidget {
                   // }
 
                   statisticBloc
-                      .add(StatisticStarted(selectedAccount: filteredAccount));
+                      .add(StatisticStarted(selectedAccount: accounts));
                   return BlocBuilder<StatisticBloc, StatisticState>(
                     bloc: statisticBloc,
+                    //buildWhen: sd,
                     builder: (context, state) {
                       var totalBalance = Decimal.fromInt(0);
                       for (var account in state.selectedAccount) {

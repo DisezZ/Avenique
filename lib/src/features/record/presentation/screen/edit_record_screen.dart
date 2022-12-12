@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 
@@ -50,10 +51,9 @@ class EditRecordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const isNew = false;
-
     final editRecordBloc = BlocProvider.of<EditRecordBloc>(context);
     editRecordBloc.add(EditRecordStarted());
+    final isNew = editRecordBloc.state.isNew;
 
     return BlocListener<EditRecordBloc, EditRecordState>(
       listenWhen: (previous, current) =>
@@ -63,11 +63,12 @@ class EditRecordScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: editRecordBloc.state.isNew
-              ? Text('Add record')
-              : Text('Edit record'),
-          // actions: [
-          //   TextButton(onPressed: () {}, child: Text('Add')),
-          // ],
+              ? const Text('New record')
+              : const Text('Edit record'),
+          actions: [
+            isNew ? Container() : _buildDeletection(context),
+            isNew ? _buildAddAction(context) : _buildSaveAction(context),
+          ],
         ),
         body: BlocBuilder<EditRecordBloc, EditRecordState>(
           builder: (context, state) {
@@ -78,89 +79,130 @@ class EditRecordScreen extends StatelessWidget {
                   hasScrollBody: false,
                   child: Column(
                     children: [
+                      SizedBox(height: 16),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.8,
                         child: CupertinoSlidingSegmentedControl<String>(
                           groupValue: state.type,
                           children: {
-                            'Expense': buildSegment('Expense'),
-                            'Income': buildSegment('Income'),
+                            'Expense': _buildSegment('Expense'),
+                            'Income': _buildSegment('Income'),
                           },
                           onValueChanged: (type) => editRecordBloc.add(
                             EditRecordTypeChanged(type: type ?? state.type),
                           ),
                         ),
                       ),
-                      CustomNumberField(
-                        initialAmount: state.amount,
-                        callback: (value) {
-                          editRecordBloc
-                              .add(EditRecordAmountChanged(amount: value));
-                        },
-                      ),
-                      ElevatedButton(
-                        onPressed: () async {
-                          final result = await Navigator.of(context).push(
-                              EditRecordNoteScreen.route(context, state.note));
-                          if (result != null) {
-                            editRecordBloc
-                                .add(EditRecordNoteChanged(note: result));
-                          }
-                        },
-                        child: Text('Edit Note'),
-                      ),
-                      ListTile(
-                        title: Text('Account'),
-                        trailing: Text('${state.account?.name ?? 'None'} >'),
-                        onTap: () async {
-                          final result = await Navigator.of(context)
-                              .push(SelectAccountScreen.route(context));
-                          if (result != null) {
-                            print(result.name);
-                            editRecordBloc
-                                .add(EditRecordAccountChanged(account: result));
-                          }
-                        },
-                      ),
-                      ListTile(
-                        title: Text('Category'),
-                        trailing: Text('${state.category?.name ?? 'None'} >'),
-                        onTap: () async {
-                          final result = await Navigator.of(context)
-                              .push(SelectCategoryScreen.route(context));
-                          if (result != null) {
-                            print(result.name);
-                            editRecordBloc.add(
-                                EditRecordCategoryChanged(category: result));
-                          }
-                        },
-                      ),
-                      ListTile(
-                        title: Text('Date'),
-                        trailing: Text(
-                            '${DateFormat('E, dd MMM yyyy').format(state.dateTime)} >'),
-                        onTap: () => DatePicker.showDatePicker(
-                          context,
-                          onConfirm: (date) => editRecordBloc
-                              .add(EditRecordDateTimeChanged(dateTime: date)),
+                      SizedBox(height: 16),
+                      SizedBox(
+                        height: 320,
+                        child: Stack(
+                          children: [
+                            CustomNumberField(
+                              initialAmount: state.amount,
+                              callback: (value) {
+                                print(value);
+                                editRecordBloc.add(
+                                    EditRecordAmountChanged(amount: value));
+                              },
+                            ),
+                            Positioned(
+                              right: 0,
+                              bottom: 10,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(width: 2),
+                                ),
+                                child: IconButton(
+                                  onPressed: () async {
+                                    final result = await Navigator.of(context)
+                                        .push(EditRecordNoteScreen.route(
+                                            context, state.note));
+                                    if (result != null) {
+                                      editRecordBloc.add(
+                                          EditRecordNoteChanged(note: result));
+                                    }
+                                  },
+                                  icon: Icon(FontAwesome.edit),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      ListTile(
-                        title: Text('Time'),
-                        trailing: Text(
-                            '${DateFormat('HH:mm').format(state.dateTime)} >'),
-                        onTap: () => DatePicker.showTimePicker(
-                          context,
-                          showSecondsColumn: false,
-                          onConfirm: (time) => editRecordBloc
-                              .add(EditRecordDateTimeChanged(dateTime: time)),
+                      Card(
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Text('Account'),
+                              trailing:
+                                  Text('${state.account?.name ?? 'None'} >'),
+                              onTap: () async {
+                                final result = await Navigator.of(context)
+                                    .push(SelectAccountScreen.route(context));
+                                if (result != null) {
+                                  print(result.name);
+                                  editRecordBloc.add(EditRecordAccountChanged(
+                                      account: result));
+                                }
+                              },
+                            ),
+                            Divider(
+                              color: Colors.grey,
+                              thickness: 1,
+                            ),
+                            ListTile(
+                              title: Text('Category'),
+                              trailing:
+                                  Text('${state.category?.name ?? 'None'} >'),
+                              onTap: () async {
+                                final result = await Navigator.of(context)
+                                    .push(SelectCategoryScreen.route(context));
+                                if (result != null) {
+                                  print(result.name);
+                                  editRecordBloc.add(EditRecordCategoryChanged(
+                                      category: result));
+                                }
+                              },
+                            ),
+                            Divider(
+                              color: Colors.grey,
+                              thickness: 1,
+                            ),
+                            ListTile(
+                              title: Text('Date'),
+                              trailing: Text(
+                                  '${DateFormat('E, dd MMM yyyy').format(state.dateTime)} >'),
+                              onTap: () => DatePicker.showDatePicker(
+                                context,
+                                onConfirm: (date) => editRecordBloc.add(
+                                    EditRecordDateTimeChanged(dateTime: date)),
+                              ),
+                            ),
+                            Divider(
+                              color: Colors.grey,
+                              thickness: 1,
+                            ),
+                            ListTile(
+                              title: Text('Time'),
+                              trailing: Text(
+                                  '${DateFormat('HH:mm').format(state.dateTime)} >'),
+                              onTap: () => DatePicker.showTimePicker(
+                                context,
+                                showSecondsColumn: false,
+                                onConfirm: (time) => editRecordBloc.add(
+                                    EditRecordDateTimeChanged(dateTime: time)),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Expanded(child: Container()),
-                      ElevatedButton(
-                          onPressed: () =>
-                              editRecordBloc.add(EditRecordSubmitted()),
-                          child: Text('DONE'))
+                      // Expanded(child: Container()),
+                      // ElevatedButton(
+                      //     onPressed: () =>
+                      //         editRecordBloc.add(EditRecordSubmitted()),
+                      //     child: Text('DONE'))
                     ],
                   ),
                 )
@@ -172,8 +214,32 @@ class EditRecordScreen extends StatelessWidget {
     );
   }
 
-  Widget buildSegment(String text) => Container(
+  Widget _buildSegment(String text) => Container(
         padding: EdgeInsets.all(8),
         child: Text(text),
       );
+
+  Widget _buildAddAction(BuildContext context) {
+    final editRecordBloc = BlocProvider.of<EditRecordBloc>(context);
+    return TextButton(
+      onPressed: () => editRecordBloc.add(EditRecordSubmitted()),
+      child: Text('Add'),
+    );
+  }
+
+  Widget _buildSaveAction(BuildContext context) {
+    final editRecordBloc = BlocProvider.of<EditRecordBloc>(context);
+    return TextButton(
+      onPressed: () => editRecordBloc.add(EditRecordSubmitted()),
+      child: Text('Save'),
+    );
+  }
+
+  Widget _buildDeletection(BuildContext context) {
+    final editRecordBloc = BlocProvider.of<EditRecordBloc>(context);
+    return IconButton(
+      onPressed: () => editRecordBloc.add(EditRecordDeleted()),
+      icon: const Icon(Icons.delete),
+    );
+  }
 }

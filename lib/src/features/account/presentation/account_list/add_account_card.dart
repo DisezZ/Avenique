@@ -10,7 +10,7 @@ class AddAccountCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(
-        EditAccountScreen.route(context: context),
+        EditAccountScreen.route(context),
       ),
       child: Card(
         child: AspectRatio(

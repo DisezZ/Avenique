@@ -1,4 +1,5 @@
 import 'package:avenique/src/common_widgets/drop_down_tile.dart';
+import 'package:avenique/src/features/account/presentation/screen/accounts_overview.dart';
 import 'package:color_blindness/color_blindness.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +27,13 @@ class SettingScreen extends StatelessWidget {
     //   }
     // });
     final settingList = [
+      Card(
+        child: ListTile(
+          title: Text('Accounts'),
+          trailing: Text('>'),
+          onTap: () => Navigator.of(context).push(AccountsOverviewScreen.route(context)),
+        ),
+      ),
       Card(
         child: DropDownTile(
           title: 'Theme',
