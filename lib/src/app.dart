@@ -12,7 +12,6 @@ import 'package:avenique/src/features/home/presentation/screen/statistic_screen.
 import 'package:avenique/src/features/record/presentation/record_list/record_tile.dart';
 import 'package:avenique/src/features/record/presentation/screen/edit_record_screen.dart';
 import 'package:avenique/src/features/record/presentation/screen/records_overview.dart';
-import 'package:avenique/src/routing/app_router.dart';
 import 'package:avenique/src/utils/color.dart';
 import 'package:color_blindness/color_blindness.dart';
 import 'package:color_blindness/color_blindness_color_scheme.dart';

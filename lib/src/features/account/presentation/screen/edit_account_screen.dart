@@ -52,7 +52,7 @@ class EditAccountScreen extends StatelessWidget {
               ? const Text('New Account')
               : const Text('Edit Account'),
           actions: [
-            isNew ? Container() : _buildDeletection(context),
+            isNew ? Container() : _buildDeleteAction(context),
             isNew ? _buildAddAction(context) : _buildSaveAction(context),
           ],
         ),
@@ -141,12 +141,36 @@ class EditAccountScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDeletection(BuildContext context) {
+  Widget _buildDeleteAction(BuildContext context) {
     final editAccountBloc = BlocProvider.of<EditAccountBloc>(context);
     return IconButton(
-      onPressed: () => editAccountBloc.add(EditAccountDeleted()),
+      // onPressed: () => editAccountBloc.add(EditAccountDeleted()),
+      onPressed: () => _buildDeleteActionConfirmationDialog(context, editAccountBloc),
       icon: const Icon(Icons.delete),
     );
+  }
+
+  void _buildDeleteActionConfirmationDialog(
+      BuildContext context, EditAccountBloc bloc) async {
+    await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text('Delete record'),
+              content: Text('Are you sure to delete this record?'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('No')),
+                TextButton(
+                    onPressed: () {
+                      bloc.add(EditAccountDeleted());
+                      Navigator.pop(context);
+                    },
+                    child: Text('Yes')),
+              ],
+            ));
   }
 }
 

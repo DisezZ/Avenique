@@ -19,12 +19,14 @@ class AccountCard extends StatelessWidget {
         onTap: () => Navigator.of(context)
             .push(EditAccountScreen.route(context, initialAccount: account)),
         child: Card(
-            child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 15),
+            child: Container(
+          padding: EdgeInsets.fromLTRB(16, 4, 12, 4),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(account.name),
-              Text(account.balance),
+              Icon(Icons.wallet),
+              Text(account.name, overflow: TextOverflow.ellipsis),
+              Text(account.balance, overflow: TextOverflow.ellipsis),
             ],
           ),
         )),

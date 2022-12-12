@@ -5,9 +5,7 @@ import 'package:pattern_formatter/pattern_formatter.dart';
 
 class CustomNumberField extends StatefulWidget {
   const CustomNumberField(
-      {super.key,
-      required this.initialAmount,
-      required this.callback});
+      {super.key, required this.initialAmount, required this.callback});
 
   final String initialAmount;
   final void Function(String) callback;
@@ -61,7 +59,7 @@ class _CustomNumberFieldState extends State<CustomNumberField> {
         child: Center(
           child: TextFormField(
             // initialValue: widget.initialAmount,
-            autofocus: true,
+            //autofocus: true,
             controller: _controller,
             decoration: InputDecoration(
               border: InputBorder.none,

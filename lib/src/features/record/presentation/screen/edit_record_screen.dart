@@ -174,7 +174,7 @@ class EditRecordScreen extends StatelessWidget {
                               title: Text('Date'),
                               trailing: Text(
                                   '${DateFormat('E, dd MMM yyyy').format(state.dateTime)} >'),
-                              onTap: () => _selectDate(context),
+                              onTap: () => _selectDate(context, editRecordBloc),
                             ),
                             Divider(
                               color: Colors.grey,
@@ -184,12 +184,7 @@ class EditRecordScreen extends StatelessWidget {
                               title: Text('Time'),
                               trailing: Text(
                                   '${DateFormat('HH:mm').format(state.dateTime)} >'),
-                              onTap: () => DatePicker.showTimePicker(
-                                context,
-                                showSecondsColumn: false,
-                                onConfirm: (time) => editRecordBloc.add(
-                                    EditRecordDateTimeChanged(dateTime: time)),
-                              ),
+                              onTap: () => _selectTime(context, editRecordBloc),
                             ),
                           ],
                         ),
@@ -234,23 +229,65 @@ class EditRecordScreen extends StatelessWidget {
   Widget _buildDeletection(BuildContext context) {
     final editRecordBloc = BlocProvider.of<EditRecordBloc>(context);
     return IconButton(
-      onPressed: () => editRecordBloc.add(EditRecordDeleted()),
+      //onPressed: () => editRecordBloc.add(EditRecordDeleted()),
+      onPressed: () =>
+          _buildDeleteActionConfirmationDialog(context, editRecordBloc),
       icon: const Icon(Icons.delete),
     );
   }
 
-  void _selectDate(BuildContext context) async {
-    final now = DateTime.now();
+  void _buildDeleteActionConfirmationDialog(
+      BuildContext context, EditRecordBloc bloc) async {
+    await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text('Delete record'),
+              content: Text('Are you sure to delete this record?'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('No')),
+                TextButton(
+                    onPressed: () {
+                      bloc.add(EditRecordDeleted());
+                      Navigator.pop(context);
+                    },
+                    child: Text('Yes')),
+              ],
+            ));
+  }
+
+  void _selectDate(BuildContext context, EditRecordBloc bloc) async {
+    final dateTime = bloc.state.dateTime;
+
     final DateTime? newDate = await showDatePicker(
       context: context,
-      initialDate: now,
-      firstDate: DateTime(now.year - 5),
-      lastDate: DateTime(now.year + 5),
+      initialDate: dateTime,
+      firstDate: DateTime(dateTime.year - 5),
+      lastDate: DateTime(dateTime.year + 5),
       helpText: 'Select a date',
     );
     if (newDate != null) {
+      final newDateTime = DateTime(newDate.year, newDate.month, newDate.day,
+          dateTime.hour, dateTime.minute);
       BlocProvider.of<EditRecordBloc>(context)
           .add(EditRecordDateTimeChanged(dateTime: newDate));
+    }
+  }
+
+  void _selectTime(BuildContext context, EditRecordBloc bloc) async {
+    //final editRecordBloc = BlocProvider.of<EditRecordBloc>(context);
+    final dateTime = bloc.state.dateTime;
+    final TimeOfDay? newTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay(hour: dateTime.hour, minute: dateTime.minute));
+    if (newTime != null) {
+      final newDateTime = DateTime(dateTime.year, dateTime.month, dateTime.day,
+          newTime.hour, newTime.minute);
+      print('Time Changed');
+      bloc.add(EditRecordDateTimeChanged(dateTime: newDateTime));
     }
   }
 }

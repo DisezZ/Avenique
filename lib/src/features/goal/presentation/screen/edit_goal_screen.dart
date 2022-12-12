@@ -63,7 +63,7 @@ class _EditGoalScreenState extends State<EditGoalScreen> {
               ? const Text('New goal')
               : const Text('Edit goal'),
           actions: [
-            isNew ? Container() : _buildDeletection(context),
+            isNew ? Container() : _buildDeleteAction(context),
             isNew ? _buildAddAction(context) : _buildSaveAction(context),
           ],
         ),
@@ -183,10 +183,12 @@ class _EditGoalScreenState extends State<EditGoalScreen> {
     );
   }
 
-  Widget _buildDeletection(BuildContext context) {
+  Widget _buildDeleteAction(BuildContext context) {
     final editGoalBloc = BlocProvider.of<EditGoalBloc>(context);
     return IconButton(
-      onPressed: () => editGoalBloc.add(EditGoalDeleted()),
+      //onPressed: () => editGoalBloc.add(EditGoalDeleted()),
+      onPressed: () =>
+          _buildDeleteActionConfirmationDialog(context, editGoalBloc),
       icon: const Icon(Icons.delete),
     );
   }
@@ -208,5 +210,28 @@ class _EditGoalScreenState extends State<EditGoalScreen> {
       BlocProvider.of<EditGoalBloc>(context)
           .add(EditGoalEndDateChanged(endDate: newDate));
     }
+  }
+
+  void _buildDeleteActionConfirmationDialog(
+      BuildContext context, EditGoalBloc bloc) async {
+    await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text('Delete record'),
+              content: Text('Are you sure to delete this record?'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('No')),
+                TextButton(
+                    onPressed: () {
+                      bloc.add(EditGoalDeleted());
+                      Navigator.pop(context);
+                    },
+                    child: Text('Yes')),
+              ],
+            ));
   }
 }
