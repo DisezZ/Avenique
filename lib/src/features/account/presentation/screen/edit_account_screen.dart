@@ -155,8 +155,8 @@ class EditAccountScreen extends StatelessWidget {
     await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: Text('Delete record'),
-              content: Text('Are you sure to delete this record?'),
+              title: Text('Delete account'),
+              content: Text('Are you sure to delete this account?'),
               actions: [
                 TextButton(
                     onPressed: () {

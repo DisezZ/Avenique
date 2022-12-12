@@ -11,12 +11,14 @@ class OutlookStatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double barPercentage = 0.5;
     return Scaffold(
       appBar: AppBar(
         title: Text('Outlook Statistics'),
       ),
       body: Container(
         padding: EdgeInsets.all(16),
+        child: Container(),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:avenique/src/features/statistics/presentation/balance_trend.dart';
 import 'package:flutter/material.dart';
 
 class BalanceStatScreen extends StatelessWidget {
@@ -17,6 +18,7 @@ class BalanceStatScreen extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.all(16),
+        child: BalanceTrend(),
       ),
     );
   }

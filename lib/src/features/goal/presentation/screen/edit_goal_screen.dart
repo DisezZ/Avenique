@@ -217,8 +217,8 @@ class _EditGoalScreenState extends State<EditGoalScreen> {
     await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: Text('Delete record'),
-              content: Text('Are you sure to delete this record?'),
+              title: Text('Delete goal'),
+              content: Text('Are you sure to delete this goal?'),
               actions: [
                 TextButton(
                     onPressed: () {
